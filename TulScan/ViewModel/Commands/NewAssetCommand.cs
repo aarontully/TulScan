@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using TulScan.Model;
 
 namespace TulScan.ViewModel.Commands
 {
@@ -17,13 +12,13 @@ namespace TulScan.ViewModel.Commands
             _vm = vm;
         }
 
-        public event EventHandler? CanExecuteChanged
+        public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public bool CanExecute(object? parameter)
+        public bool CanExecute(object parameter)
         {
             //Asset asset = parameter as Asset;
 
@@ -80,7 +75,7 @@ namespace TulScan.ViewModel.Commands
             return true;
         }
 
-        public async void Execute(object? parameter)
+        public async void Execute(object parameter)
         {
             await _vm.SubmitAsset();
         }

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace TulScan.ViewModel.Helpers
@@ -12,6 +9,7 @@ namespace TulScan.ViewModel.Helpers
         public Task PrintAssetLabel(string assetNumber)
         {
             string strFilePath = Path.GetDirectoryName(Environment.ProcessPath) + @"\Assets\AssetLabel.lbx";
+            var domain = Properties.Settings.Default.DomainName;
 
             bpac.DocumentClass doc = new();
             doc.Open(strFilePath);
@@ -20,7 +18,7 @@ namespace TulScan.ViewModel.Helpers
             //F1 and F2 being the objectname on the brother labael
             var shrtAssetNumber = assetNumber.Replace("ASSET-", "");
             doc.GetObject("F1").Text = shrtAssetNumber;
-            doc.GetObject("F2").Text = $"https://YOUR_DOMAIN/jira/browse/{assetNumber}";
+            doc.GetObject("F2").Text = $"https://{domain}/jira/browse/{assetNumber}";
 
             doc.StartPrint("", bpac.PrintOptionConstants.bpoDefault);
             doc.PrintOut(1, bpac.PrintOptionConstants.bpoDefault);

@@ -15,7 +15,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="1100">
+        Title="TulScan" Height="750" Width="1100">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -23,61 +23,70 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid DataContext="{StaticResource vm}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="450"/>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <materialDesign:Card Grid.Column="0"  Width="400" Height="650" Padding="19">
-            <StackPanel>
-                <TextBlock Margin="16 16 12 8" FontSize="16">Add Asset Information</TextBlock>
-                <Separator Style="{StaticResource MaterialDesignLightSeparator}" Background="LightGray" />
-                <StackPanel Margin="0 20 0 0">
-                    <TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Summary" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Serial Number" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <ComboBox SelectedValue="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag" materialDesign:HintAssist.Hint="Location" IsEditable="True" Margin="0 20 0 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                        <ComboBoxItem Tag="10334">CAR</ComboBoxItem>
-                        <ComboBoxItem Tag="10335">Operations Centre</ComboBoxItem>
-                        <ComboBoxItem Tag="10337">Expansion Zone</ComboBoxItem>
-                        <ComboBoxItem Tag="11001">Expansion Zone Mezzanine</ComboBoxItem>
-                        <ComboBoxItem Tag="10338">First Floor</ComboBoxItem>
-                        <ComboBoxItem Tag="10339">Reception</ComboBoxItem>
-                        <ComboBoxItem Tag="10340">Lunch Room</ComboBoxItem>
-                        <ComboBoxItem Tag="10341">Utility Zone</ComboBoxItem>
-                        <ComboBoxItem Tag="11075">Plant Room</ComboBoxItem>
-                    </ComboBox>
-                    <TextBox Text="{Binding DetailedLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Detailed Location" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <ComboBox SelectedValue="{Binding HardwareType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag" materialDesign:HintAssist.Hint="Hardware Type" IsEditable="True" Margin="0 20 0 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
-                        <ComboBoxItem Tag="10346">Component</ComboBoxItem>
-                        <ComboBoxItem Tag="10348">Server</ComboBoxItem>
-                        <ComboBoxItem Tag="10347">Peripheral</ComboBoxItem>
-                        <ComboBoxItem Tag="10349">Desktop</ComboBoxItem>
-                        <ComboBoxItem Tag="10350">Laptop</ComboBoxItem>
-                        <ComboBoxItem Tag="10354">Switch/Router</ComboBoxItem>
-                        <ComboBoxItem Tag="10616">Other Hardware Unit</ComboBoxItem>
-                    </ComboBox>
-                    <TextBox Text="{Binding ManafactureBrand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Manafacture/Brand" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Model" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Text="{Binding AssetSupplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Asset Supplier" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-                    <TextBox Text="{Binding SupportContractDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Support Contract Details" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="Configuration"/>
+                <Separator/>
+                <MenuItem x:Name="exitBtn" Header="Exit" Click="exitBtn_Click"/>
+            </MenuItem>
+        </Menu>
+        <Grid DataContext="{StaticResource vm}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="450"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <materialDesign:Card Grid.Column="0"  Width="400" Height="650" Padding="19">
+                <StackPanel>
+                    <TextBlock Margin="16 16 12 8" FontSize="16">Add Asset Information</TextBlock>
+                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" Background="LightGray" />
+                    <StackPanel Margin="0 20 0 0">
+                        <TextBox Text="{Binding Summary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Summary" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox Text="{Binding SerialNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Serial Number" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <ComboBox x:Name="locationComboBox" SelectedValue="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag" materialDesign:HintAssist.Hint="Location" IsEditable="True" Margin="0 20 0 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBoxItem Tag="10334">CAR</ComboBoxItem>
+                            <ComboBoxItem Tag="10335">Operations Centre</ComboBoxItem>
+                            <ComboBoxItem Tag="10337">Expansion Zone</ComboBoxItem>
+                            <ComboBoxItem Tag="11001">Expansion Zone Mezzanine</ComboBoxItem>
+                            <ComboBoxItem Tag="10338">First Floor</ComboBoxItem>
+                            <ComboBoxItem Tag="10339">Reception</ComboBoxItem>
+                            <ComboBoxItem Tag="10340">Lunch Room</ComboBoxItem>
+                            <ComboBoxItem Tag="10341">Utility Zone</ComboBoxItem>
+                            <ComboBoxItem Tag="11075">Plant Room</ComboBoxItem>
+                        </ComboBox>
+                        <TextBox Text="{Binding DetailedLocation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Detailed Location" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <ComboBox x:Name="hardwareComboBox" SelectedValue="{Binding HardwareType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag" materialDesign:HintAssist.Hint="Hardware Type" IsEditable="True" Margin="0 20 0 0" Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                            <ComboBoxItem Tag="10346">Component</ComboBoxItem>
+                            <ComboBoxItem Tag="10348">Server</ComboBoxItem>
+                            <ComboBoxItem Tag="10347">Peripheral</ComboBoxItem>
+                            <ComboBoxItem Tag="10349">Desktop</ComboBoxItem>
+                            <ComboBoxItem Tag="10350">Laptop</ComboBoxItem>
+                            <ComboBoxItem Tag="10354">Switch/Router</ComboBoxItem>
+                            <ComboBoxItem Tag="10616">Other Hardware Unit</ComboBoxItem>
+                        </ComboBox>
+                        <TextBox Text="{Binding ManafactureBrand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Manafacture/Brand" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox Text="{Binding Model, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Model" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox Text="{Binding AssetSupplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Asset Supplier" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                        <TextBox Text="{Binding SupportContractDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" materialDesign:HintAssist.Hint="Support Contract Details" Margin="0 15 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 
-                    <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
-                    <StackPanel Orientation="Horizontal">
-                        <Button Command="{Binding NewAssetCommand}" CommandParameter="{Binding Asset}" Content="Submit Asset" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0"/>
-                        <CheckBox x:Name="retainInfoCheckbox" VerticalAlignment="Center" Content="Retain information after submit" IsChecked="{Binding RetainInfo}"/>
+                        <Separator Style="{StaticResource MaterialDesignLightSeparator}" />
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command="{Binding NewAssetCommand}" CommandParameter="{Binding Asset}" Content="Submit Asset" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,20,0"/>
+                            <CheckBox x:Name="retainInfoCheckbox" VerticalAlignment="Center" Content="Retain information after submit" IsChecked="{Binding RetainInfo}"/>
+                        </StackPanel>
                     </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </materialDesign:Card>
+            </materialDesign:Card>
 
-        <materialDesign:Card Grid.Column="1" Width="600" Height="650" Padding="19">
-            <ListBox ItemsSource="{Binding Logs}" Background="Black" Foreground="LightGreen">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <uc:DisplayLog Log="{Binding}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </materialDesign:Card>
-    </Grid>
+            <materialDesign:Card Grid.Column="1" Width="600" Height="650" Padding="19">
+                <ListBox ItemsSource="{Binding Logs}" Background="Black" Foreground="LightGreen">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <uc:DisplayLog Log="{Binding}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </materialDesign:Card>
+        </Grid>
+    </DockPanel>
 </Window>

@@ -8,14 +8,15 @@ namespace TulScan.ViewModel.Helpers
 {
     public class JiraHelper
     {
-        public static Task<JiraResponse?> CreateIssue(JiraRequest jiraRequest)
+        public static Task<JiraResponse> CreateIssue(JiraRequest jiraRequest)
         {
             try
             {
-                var client = new RestClient("https://YOUR_DOMAIN/jira/rest/api/latest/issue");
+                var domain = Properties.Settings.Default.DomainName;
+                var client = new RestClient($"https://{domain}/jira/rest/api/latest/issue");
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
-                request.AddHeader("Authorization", "Basic YOUR_PASSWORD");
+                request.AddHeader("Authorization", "Basic amlyYWFkbWluOkppckAwMDc=");
                 request.AddHeader("Content-Type", "application/json");
                 var json = JsonConvert.SerializeObject(jiraRequest);
                 request.AddParameter("application/json", json, ParameterType.RequestBody);

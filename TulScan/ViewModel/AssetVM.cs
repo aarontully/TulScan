@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using TulScan.Model;
 using TulScan.ViewModel.Commands;
@@ -25,124 +22,124 @@ namespace TulScan.ViewModel
             Asset = new Asset();
         }
 
-        private Asset? _asset;
-        public Asset? Asset
+        private Asset asset;
+        public Asset Asset
         {
-            get { return _asset; }
+            get { return asset; }
             set 
             { 
-                _asset = value;
-                OnPropertyChanged(nameof(_asset));
+                asset = value;
+                OnPropertyChanged("asset");
             }
         }
 
-        private string? _summary;
-        public string? Summary
+        private string summary;
+        public string Summary
         {
-            get { return _summary; }
+            get { return summary; }
             set 
             { 
-                _summary = value;
-                OnPropertyChanged(nameof(_summary));
+                summary = value;
+                OnPropertyChanged("summary");
             }
         }
 
-        private string? _serialNumber;
-        public string? SerialNumber
+        private string serialNumber;
+        public string SerialNumber
         {
-            get { return _serialNumber; }
+            get { return serialNumber; }
             set 
             { 
-                _serialNumber = value;
-                OnPropertyChanged(nameof(_serialNumber));
+                serialNumber = value;
+                OnPropertyChanged("serialNumber");
             }
         }
 
-        private string? _location;
-        public string? Location
+        private string location;
+        public string Location
         {
-            get { return _location; }
+            get { return location; }
             set 
             { 
-                _location = value;
-                OnPropertyChanged(nameof(_location));
+                location = value;
+                OnPropertyChanged("location");
             }
         }
 
-        private string? _detailedLocation;
-        public string? DetailedLocation
+        private string detailedLocation;
+        public string DetailedLocation
         {
-            get { return _detailedLocation; }
+            get { return detailedLocation; }
             set 
             { 
-                _detailedLocation = value;
-                OnPropertyChanged(nameof(_detailedLocation));
+                detailedLocation = value;
+                OnPropertyChanged("detailedLocation");
             }
         }
 
-        private string? _hardwareType;
-        public string? HardwareType
+        private string hardwareType;
+        public string HardwareType
         {
-            get { return _hardwareType; }
+            get { return hardwareType; }
             set 
             { 
-                _hardwareType = value;
-                OnPropertyChanged(nameof(_hardwareType));
+                hardwareType = value;
+                OnPropertyChanged("hardwareType");
             }
         }
 
-        private string? _manafactureBrand;
-        public string? ManafactureBrand
+        private string manafactureBrand;
+        public string ManafactureBrand
         {
-            get { return _manafactureBrand; }
+            get { return manafactureBrand; }
             set 
             { 
-                _manafactureBrand = value;
-                OnPropertyChanged(nameof(_manafactureBrand));
+                manafactureBrand = value;
+                OnPropertyChanged("manafactureBrand");
             }
         }
 
-        private string? _model;
-        public string? Model
+        private string model;
+        public string Model
         {
-            get { return _model; }
+            get { return model; }
             set 
             { 
-                _model = value; 
-                OnPropertyChanged(nameof(_model));
+                model = value; 
+                OnPropertyChanged("model");
             }
         }
 
-        private string? _assetSupplier;
-        public string? AssetSupplier
+        private string assetSupplier;
+        public string AssetSupplier
         {
-            get { return _assetSupplier; }
+            get { return assetSupplier; }
             set 
             { 
-                _assetSupplier = value;
-                OnPropertyChanged(nameof(_assetSupplier));
+                assetSupplier = value;
+                OnPropertyChanged("assetSupplier");
             }
         }
 
-        private string? _supportContractDetails;
-        public string? SupportContractDetails
+        private string supportContractDetails;
+        public string SupportContractDetails
         {
-            get { return _supportContractDetails; }
+            get { return supportContractDetails; }
             set 
             { 
-                _supportContractDetails = value;
-                OnPropertyChanged(nameof(_supportContractDetails));
+                supportContractDetails = value;
+                OnPropertyChanged("supportContractDetails");
             }
         }
 
-        private bool? _retainInfo;
-        public bool? RetainInfo
+        private bool retainInfo;
+        public bool RetainInfo
         {
-            get { return _retainInfo; }
+            get { return retainInfo; }
             set 
             { 
-                _retainInfo = value; 
-                OnPropertyChanged(nameof(_retainInfo));
+                retainInfo = value; 
+                OnPropertyChanged("retainInfo");
             }
         }
 
@@ -152,7 +149,7 @@ namespace TulScan.ViewModel
             {
                 Fields = new()
                 {
-                    Summary = _summary,
+                    Summary = summary,
                     Project = new()
                     {
                         Id = "10111" //id of the jira project
@@ -162,20 +159,20 @@ namespace TulScan.ViewModel
                         Id = "10110" //id of the projects issue type
                     },
                     WarrantyDate = DateTime.Now.ToString("O"),
-                    SupportContractDetails = _supportContractDetails,
-                    AssetSupplier = _assetSupplier,
-                    SerialNumber = _serialNumber,
+                    SupportContractDetails = supportContractDetails,
+                    AssetSupplier = assetSupplier,
+                    SerialNumber = serialNumber,
                     Location = new()
                     {
-                        Id = _location
+                        Id = location
                     },
-                    DetailedLocation = _detailedLocation,
+                    DetailedLocation = detailedLocation,
                     HardwareType = new()
                     {
-                        Id = _hardwareType
+                        Id = hardwareType
                     },
-                    ManafactureBrand = _manafactureBrand,
-                    Model = _model
+                    ManafactureBrand = manafactureBrand,
+                    Model = model
                 }
             };
 
@@ -235,27 +232,12 @@ namespace TulScan.ViewModel
                 return;
             }
 
-            var response = await JiraHelper.CreateIssue(request);
+            JiraResponse response = await JiraHelper.CreateIssue(request);
 
             if(response.Key != null)
             {
                 BrotherPrinterHelper brotherPrinterHelper = new();
                 await brotherPrinterHelper.PrintAssetLabel(response.Key);
-
-
-                if(_retainInfo is false)
-                {
-                    Summary = string.Empty;
-                    Location = string.Empty;
-                    DetailedLocation = string.Empty;
-                    HardwareType = string.Empty;
-                    ManafactureBrand = string.Empty;
-                    Model = string.Empty;
-                    AssetSupplier = string.Empty;
-                    SupportContractDetails = string.Empty;
-                }
-
-                SerialNumber = string.Empty;
 
                 Log logCompleted = new()
                 {
@@ -263,12 +245,28 @@ namespace TulScan.ViewModel
                     Message = $"{response.Key} was created successfully"
                 };
                 Logs.Add(logCompleted);
+
+                if(retainInfo == false)
+            {
+                Summary = string.Empty;
+                Location = string.Empty;
+                DetailedLocation = string.Empty;
+                HardwareType = string.Empty;
+                ManafactureBrand = string.Empty;
+                Model = string.Empty;
+                AssetSupplier = string.Empty;
+                SupportContractDetails = string.Empty;
+            }
+
+
+            SerialNumber = string.Empty;
+
             }
             else
             {
                 Log logError = new()
                 {
-                    DateTime= DateTime.Now.ToString("g"),
+                    DateTime = DateTime.Now.ToString("g"),
                     Message = "An error occurred, please try again."
                 };
                 Logs.Add(logError);
@@ -285,7 +283,7 @@ namespace TulScan.ViewModel
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

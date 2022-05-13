@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using TulScan.ViewModel;
 
 namespace TulScan.View
@@ -20,14 +9,34 @@ namespace TulScan.View
     /// </summary>
     public partial class AssetWindow : Window
     {
-        readonly AssetVM viewModel;
+        readonly AssetVM _viewModel;
 
         public AssetWindow()
         {
             InitializeComponent();
 
             retainInfoCheckbox.IsChecked = true;
-            viewModel = this.Resources["vm"] as AssetVM;
+            locationComboBox.IsReadOnly = true;
+            locationComboBox.IsEditable = false;
+            hardwareComboBox.IsReadOnly = true;
+            hardwareComboBox.IsEditable = false;
+            _viewModel = this.Resources["vm"] as AssetVM;
+        }
+
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            if(string.IsNullOrEmpty(Properties.Settings.Default.DomainName))
+            {
+                ConfigWindow configWindow = new ConfigWindow();
+                configWindow.ShowDialog();
+            }
+        }
+
+        private void exitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
