@@ -61,3 +61,6 @@ var shrtAssetNumber = assetNumber.Replace("ASSET-", "");
 doc.GetObject("F1").Text = shrtAssetNumber;
 doc.GetObject("F2").Text = $"https://jira.mediahubaustralia.com.au/jira/browse/{assetNumber}";
 ```
+### ToDo
+***
+- Add Jira authorization to config window
