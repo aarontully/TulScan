@@ -16,7 +16,7 @@ namespace TulScan.ViewModel.Helpers
                 var client = new RestClient($"https://{domain}/jira/rest/api/latest/issue");
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
-                request.AddHeader("Authorization", "Basic amlyYWFkbWluOkppckAwMDc=");
+                request.AddHeader("Authorization", "Basic YOUR_CONVERTED_KEY");
                 request.AddHeader("Content-Type", "application/json");
                 var json = JsonConvert.SerializeObject(jiraRequest);
                 request.AddParameter("application/json", json, ParameterType.RequestBody);
